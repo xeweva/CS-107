@@ -1,0 +1,523 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;*******************************************************
+                       ************************
+    2 00000000         ;
+    3 00000000         ;    CS 107: Computer Architecture and Organization -- L
+                       AB 2
+    4 00000000         ;    Filename: Lab02.s
+    5 00000000         ;    Date: [YOUR DATE]
+    6 00000000         ;    Author: [YOUR NAME]
+    7 00000000         ;
+    8 00000000         ;*******************************************************
+                       ************************
+    9 00000000         ;
+   10 00000000                 GLOBAL           __main
+   11 00000000                 AREA             main, CODE, READONLY
+   12 00000000                 EXPORT           __main
+   13 00000000                 EXPORT           __use_two_region_memory
+   14 00000000 00000000 
+                       __use_two_region_memory
+                               EQU              0
+   15 00000000                 EXPORT           SystemInit
+   16 00000000                 ENTRY
+   17 00000000         
+   18 00000000         
+   19 00000000         ; System Init routine
+   20 00000000         SystemInit
+   21 00000000         ;
+   22 00000000 4770            BX               LR
+   23 00000002         ;
+   24 00000002         ; Main program
+   25 00000002         ;
+   26 00000002         __main
+   27 00000002         ;
+   28 00000002         ; 1. Write four different instructions that clear regist
+                       er R7 to zero.
+   29 00000002         ;
+   30 00000002         ;    - Your commands should works for any number in R7
+   31 00000002         ;
+   32 00000002         ;    - Do not use "LDR Rx, =..." command!
+   33 00000002         ;
+   34 00000002 F04F 3711       MOV              R7, #0x11111111
+   35 00000006 F04F 0700       MOV              R7, #0X00000000
+   36 0000000A         
+   37 0000000A F04F 3722       MOV              R7, #0x22222222
+   38 0000000E F007 0700       AND              R7, #0X00000000
+   39 00000012         ;-- Your instruction here ---
+   40 00000012         ; 
+   41 00000012 F04F 3733       MOV              R7, #0x33333333
+   42 00000016 F027 37FF       BIC              R7, #0XFFFFFFFF
+   43 0000001A         ;-- Your instruction here ---
+   44 0000001A         ; 
+   45 0000001A F04F 3744       MOV              R7, #0x44444444
+   46 0000001E EBA7 0707       SUB              R7, R7
+   47 00000022         ;-- Your instruction here ---
+   48 00000022         
+   49 00000022 F04F 3755       MOV              R7, #0x55555555
+   50 00000026 EA27 0707       BIC              R7, R7
+   51 0000002A         
+   52 0000002A         ;
+   53 0000002A         ; 2. You have some positive non-zero two's complement nu
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+                       mber into R0
+   54 0000002A         ;
+   55 0000002A         ;    Write an instruction(s) to change a sign of the num
+                       ber in R0.
+   56 0000002A         ;    
+   57 0000002A         ;    - Your command(s) should works for any number in R0
+                       
+   58 0000002A         ;
+   59 0000002A         ;    - Do not use any other registers!
+   60 0000002A         ;
+   61 0000002A         ; -- Place your code here! --
+   62 0000002A         
+   63 0000002A F04F 00FF       MOV              R0, #0X000000FF
+   64 0000002E F080 30FF       EOR              R0, #0XFFFFFFFF
+   65 00000032         
+   66 00000032         ;    Write some other instruction(s) to change a sign of
+                        the number in R0 again. 
+   67 00000032         ;
+   68 00000032         ;    - Use some another command(s) to do it
+   69 00000032         ;
+   70 00000032         ;    - Do not use any other registers!
+   71 00000032         ;
+   72 00000032         ; -- Place your code here! --
+   73 00000032 F04F 00FF       MOV              R0, #0X000000FF
+   74 00000036 EA6F 0000       MVN              R0, R0
+   75 0000003A         
+   76 0000003A         ;    Check yourself: Do you have your original number in
+                        R0?
+   77 0000003A         ;
+   78 0000003A         ;    Can you change the sign by using some thrid way?
+   79 0000003A         ;
+   80 0000003A         ;    - Do not use any other registers!
+   81 0000003A         ;
+   82 0000003A         ; -- Place your code here! --
+   83 0000003A         
+   84 0000003A         
+   85 0000003A         ;
+   86 0000003A         ; 3. Write instructions that set bits 0, 4 and 12 to 1,
+   87 0000003A         ;    then clear (sets to 0's) bits 31 and 8,
+   88 0000003A         ;    and invert bit 5 in register R6 and leave the 
+   89 0000003A         ;    remaining bits unchanged. 
+   90 0000003A         ;
+   91 0000003A         ;    Bit 0 is less significant bit, the bit 31 is most 
+   92 0000003A         ;    significant one
+   93 0000003A         ;
+   94 0000003A         ;    - Your code should works for any number in R6
+   95 0000003A         ;
+   96 0000003A         ;    - Do not use "LDR Rx, =..." command!
+   97 0000003A         ; 
+   98 0000003A         ; +----+-----------------------+---+---+
+   99 0000003A         ; ! 31 !    ... R6 bits  ...   ! 1 ! 0 !
+  100 0000003A         ; +----+-----------------------+---+---+
+  101 0000003A         ;
+  102 0000003A         ; (0x9EB1)
+  103 0000003A         ;
+  104 0000003A F648 7680       MOVW             R6, #0x8F80
+  105 0000003E F2C8 0600       MOVT             R6, #0x8000
+  106 00000042         ;
+  107 00000042         ; -- Place your code here! --
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+  108 00000042         
+  109 00000042 F241 0011       MOVW             R0, #0x1011
+  110 00000046 EA46 0600       ORR              R6, R0      ; SETTING BITS 0 4 
+                                                            AND 12 TO 1
+  111 0000004A         
+  112 0000004A F64F 60FF       MOVW             R0, #0XFEFF
+  113 0000004E F6C7 70FF       MOVT             R0, #0X7FFF
+  114 00000052 EA06 0600       AND              R6, R0      ; CLEARING BITS 8 A
+                                                            ND 32
+  115 00000056         
+  116 00000056 F086 0620       EOR              R6, #0X20   ; INVERTING BIT 5
+  117 0000005A         
+  118 0000005A         ;
+  119 0000005A         ; 4. Suppose you have some 32-bit number in register R0.
+                        Give the instructions 
+  120 0000005A         ;    that would replace lower half of register R0 by the
+                        value of 0x7777. High
+  121 0000005A         ;    16 bits should be remains unchanged.
+  122 0000005A         ;
+  123 0000005A         ;    - You may use one additional register to do it.
+  124 0000005A         ;
+  125 0000005A         ;    - Your code should works for any number in R6
+  126 0000005A         ;
+  127 0000005A         ;    - Do not use "LDR Rx, =..." command!
+  128 0000005A         ;
+  129 0000005A F246 508A       MOVW             R0, #0x658A
+  130 0000005E F6CB 30FF       MOVT             R0, #0xBBFF
+  131 00000062         ; 
+  132 00000062         ; -- Place your code here! --
+  133 00000062 F247 7177       MOVW             R1, #0x7777
+  134 00000066 F6CB 31FF       MOVT             R1, #0xBBFF
+  135 0000006A 4608            MOV              R0, R1
+  136 0000006C         ;
+  137 0000006C         ;    Try another way to do it without using any other re
+                       gister(s)
+  138 0000006C         ;
+  139 0000006C F245 6078       MOVW             R0, #0x5678
+  140 00000070 F2C1 2034       MOVT             R0, #0x1234
+  141 00000074         ;
+  142 00000074         ; -- Place your code here! --
+  143 00000074         
+  144 00000074 F020 00FF       BIC              R0, #0x00FF
+  145 00000078 F420 407F       BIC              R0, #0x00FF << 8
+  146 0000007C         
+  147 0000007C F080 0077       EOR              R0, #0x0077
+  148 00000080 F480 40EE       EOR              R0, #0x0077 << 8
+  149 00000084         
+  150 00000084         ;
+  151 00000084         ; 5. Store 0x3FFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFF
+                       F into R4, R5, R6 and R7 
+  152 00000084         ;
+  153 00000084         ;    (R4 = 0x3FFFFFFF, R5 = 0xFFFFFFFF, R6 = 0xFFFFFFFF 
+                       and R7 = 0xFFFFFFFF) 
+  154 00000084         ;
+  155 00000084         ;    Store 0, 0, 0, and 1 into R8, R9, R10 and R11 
+  156 00000084         ; 
+  157 00000084         ;    Write a program to add 128-bit numbers together, pl
+                       acing the result in registers
+  158 00000084         ;    R0 (MSL), R1, R2 and R3 (LSB). The first operand sh
+
+
+
+ARM Macro Assembler    Page 4 
+
+
+                       ould is in registers R4 (MSB), R5,
+  159 00000084         ;    R6 and R7 {LSB), and the second operand in register
+                       s R8 (MSB), R9, R10, and R11 (LSB).
+  160 00000084         ;
+  161 00000084         ;    - Your code should works correctly for any numbers 
+                       in R4-R11
+  162 00000084         ;
+  163 00000084         ;    - Do not use "LDR Rx, =..." command!
+  164 00000084         ;
+  165 00000084         ;  ( 0x40000000, 0x00000000, 0x00000000, 0x00000000 )
+  166 00000084         ;
+  167 00000084         ; -- Place your code here! --
+  168 00000084         
+  169 00000084 F04F 14FF       MOV              R4, #0x00FF00FF
+  170 00000088 F444 447F       ORR              R4, #0x0000FF00
+  171 0000008C F044 547C       ORR              R4, #0x3F000000
+  172 00000090         
+  173 00000090 F04F 35FF       MOV              R5, #0XFFFFFFFF
+  174 00000094 F04F 36FF       MOV              R6, #0XFFFFFFFF
+  175 00000098 F04F 37FF       MOV              R7, #0XFFFFFFFF
+  176 0000009C         
+  177 0000009C F04F 0800       MOV              R8, #0
+  178 000000A0 F04F 0900       MOV              R9, #0
+  179 000000A4 F04F 0A00       MOV              R10, #0
+  180 000000A8 F04F 0B01       MOV              R11, #1
+  181 000000AC         
+  182 000000AC EB17 030B       ADDS             R3, R7, R11 ;
+  183 000000B0 EB56 020A       ADCS             R2, R6, R10 ;
+  184 000000B4 EB55 0109       ADCS             R1, R5, R9  ;
+  185 000000B8 EB54 0008       ADCS             R0, R4, R8  ;
+  186 000000BC         
+  187 000000BC         
+  188 000000BC         ;
+  189 000000BC         ;
+  190 000000BC         ; 6. Temperature conversion between Celsius and Fahrenhe
+                       it can be computed using
+  191 000000BC         ;    the relationship
+  192 000000BC         ;
+  193 000000BC         ;    C = (5 / 9) * (F - 32)
+  194 000000BC         ;
+  195 000000BC         ;    where C and F are in degrees (signed integer). Cels
+                       ius value is in R0, the result 
+  196 000000BC         ;    should be stored in R1 (signed integer). 
+  197 000000BC         ;
+  198 000000BC         ;    Try 24C, 46C, 0C, -4C, -25C
+  199 000000BC         ;
+  200 000000BC         ;    - Convert your hexadecimal result in R1 to decimal 
+                       (signed).
+  201 000000BC         ;      ( https://www.rapidtables.com/convert/number/hex-
+                       to-decimal.html ) 
+  202 000000BC         ;
+  203 000000BC         ;    - Use Google online C to F conversion tool to check
+                        your results.
+  204 000000BC         ;
+  205 000000BC         ;    - Do not use "LDR Rx, =..." command!
+  206 000000BC         ;
+  207 000000BC F06F 0018       MOV              R0, #-25    ; 24 deg C
+  208 000000C0         ; -- Place your code here! --
+  209 000000C0         
+
+
+
+ARM Macro Assembler    Page 5 
+
+
+  210 000000C0 F04F 0109       MOV              R1, #9
+  211 000000C4 F04F 0205       MOV              R2, #5
+  212 000000C8 F04F 0320       MOV              R3, #32
+  213 000000CC         
+  214 000000CC FB00 F001       MUL              R0, R1
+  215 000000D0 FB90 F0F2       SDIV             R0, R2
+  216 000000D4 4418            ADD              R0, R3
+  217 000000D6         
+  218 000000D6         ;
+  219 000000D6         ; What to do to see tenths of Fahrenheit?
+  220 000000D6         ;
+  221 000000D6 F04F 0015       MOV              R0, #21
+  222 000000DA         
+  223 000000DA F04F 040A       MOV              R4, #10     ;//MULTIPLIER
+  224 000000DE FB00 F004       MUL              R0, R4      ;//MULTIPLY BY 10 T
+                                                            O SEE 1 DIGIT AFTER
+                                                             ,
+  225 000000E2         
+  226 000000E2 F04F 0109       MOV              R1, #9
+  227 000000E6 F04F 0205       MOV              R2, #5
+  228 000000EA F04F 0320       MOV              R3, #32
+  229 000000EE         
+  230 000000EE FB03 F304       MUL              R3, R4      ;// 32 * MULTIPLIER
+                                                            
+  231 000000F2         
+  232 000000F2 FB00 F001       MUL              R0, R1
+  233 000000F6 FB90 F0F2       SDIV             R0, R2
+  234 000000FA 4418            ADD              R0, R3
+  235 000000FC         
+  236 000000FC         ;//RESULT HAS TO BE DIVIDED MY MULTIPLIER (I HAVE NO IDE
+                       A HOW TO WORK WITH FLOAT, SO RESULT HAS TO BE DIVIDED MA
+                       NUALLY)
+  237 000000FC         
+  238 000000FC         ;
+  239 000000FC         ; 7. Make code to write the number 0x5555AAAA to R0. You
+                        may use only one 'MOV', 'MOVW' or 'MOVT' command 
+  240 000000FC         ;    and one or more any other command(s)...
+  241 000000FC         ;
+  242 000000FC         ;    - Do not use "LDR Rx, =..." command!
+  243 000000FC         ;
+  244 000000FC         ;    Tip: Use barrel shifter.
+  245 000000FC         ;
+  246 000000FC         ; -- Place your code here! --
+  247 000000FC         
+  248 000000FC F04F 00AA       MOV              R0, #0xAA
+  249 00000100 F440 402A       ORR              R0, #0xAA00
+  250 00000104 F440 00AA       ORR              R0, #0x550000
+  251 00000108 F040 40AA       ORR              R0, #0x55000000
+  252 0000010C         ;
+  253 0000010C         ;    Add one more command to maker R0 equal to 0xAAAA555
+                       5
+  254 0000010C         
+  255 0000010C EA6F 0000       MVN              R0, R0
+  256 00000110         
+  257 00000110         ;
+  258 00000110         ;-- Your instruction here ---
+  259 00000110         ; ? ROR R0, #32
+  260 00000110         
+  261 00000110         
+
+
+
+ARM Macro Assembler    Page 6 
+
+
+  262 00000110         ;
+  263 00000110         ; 8. Make code to write the number 0x7FF80 to R0. You ma
+                       y use only one 'MOV', 'MOVW' or 'MOVT' command 
+  264 00000110         ;    and one or more any other command(s)...
+  265 00000110         ;
+  266 00000110         ;    Tip: Use may want to use paper and pencil to find t
+                       he solution...
+  267 00000110         ;    Tip: Barrel shifter may be your friend again.
+  268 00000110         ;
+  269 00000110         ;    - Do not use "LDR Rx, =..." command!
+  270 00000110         ;
+  271 00000110         ; -- Place your code here! --
+  272 00000110         
+  273 00000110 F04F 0080       MOV              R0, 0x80
+  274 00000114 F440 407F       ORR              R0, 0xFF00
+  275 00000118 F440 20E0       ORR              R0, 0x70000
+  276 0000011C         
+  277 0000011C         
+  278 0000011C         ;
+  279 0000011C         ; 9. Cortex-M4 has 'ROR' (Rotate right) command but have
+                        no ROL (Rotate left) command. 
+  280 0000011C         ;    Rotate Left by 1 bit is:
+  281 0000011C         ;
+  282 0000011C         ;         +--------------->------------------>+
+  283 0000011C         ;         !                                   !
+  284 0000011C         ; +---+   ! +--+--+-----------------+--+--+   !
+  285 0000011C         ; ! C !<--+-!  !  !     . . .       !  !  !<--+
+  286 0000011C         ; +---+     +--+--+-----------------+--+--+
+  287 0000011C         ;
+  288 0000011C         ;    - Test your code with R0 = 0xC0005003   (Result: R0
+                       =0x8000A007, Flag C = 1)
+  289 0000011C         ;    - Test your code with R0 = 0x80000000   (Result: R0
+                       =0x00000001, Flag C = 1)
+  290 0000011C         ;
+  291 0000011C F245 0003       MOVW             R0, #0x5003
+  292 00000120 F2CC 0000       MOVT             R0, #0xC000
+  293 00000124         ; MOV  R0, #0x80000000
+  294 00000124         ; -- Place your code here! --
+  295 00000124         
+  296 00000124 0040            LSLS             R0, #1
+  297 00000126 F140 0000       ADC              R0, #0
+  298 0000012A         
+  299 0000012A         
+  300 0000012A         ;
+  301 0000012A         ; 10. Cortex-M4 has command to divide numbers, but have 
+                       no command to get a remainder.
+  302 0000012A         ;
+  303 0000012A         ;   Store some positive unsigned numbers into R0 and R1 
+                       (R0 > R1)
+  304 0000012A         ;
+  305 0000012A         ;     Write the code to do:
+  306 0000012A         ;
+  307 0000012A         ;     R2 = R0 / R1    (Result of unsigned division)
+  308 0000012A         ;   R3 = R0 mod D1  (Remainder)
+  309 0000012A         ;
+  310 0000012A         ;     Check your code with different numbers.
+  311 0000012A         ;
+  312 0000012A         ; -- Place your code here! --
+  313 0000012A F04F 007D       MOV              R0, #125
+
+
+
+ARM Macro Assembler    Page 7 
+
+
+  314 0000012E F04F 0107       MOV              R1, #7
+  315 00000132         
+  316 00000132 FB90 F2F1       SDIV             R2, R0, R1
+  317 00000136 FB01 F402       MUL              R4, R1, R2
+  318 0000013A EBA0 0304       SUB              R3, R0, R4
+  319 0000013E         
+  320 0000013E         
+  321 0000013E         
+  322 0000013E         ;
+  323 0000013E         ; 11. Without using MUL instruction, give instructions t
+                       hat multiply register R4 by:
+  324 0000013E         ;
+  325 0000013E         ;     R4 = R4 * 16384  (one command)
+  326 0000013E         ;     R4 = R4 * 257    (one command)
+  327 0000013E         ;     R4 = R4 * 255    (one command)
+  328 0000013E         ;     R4 = R4 * 18     (two command)
+  329 0000013E         ;     R4 = R4 * 135    (two commands)
+  330 0000013E         ;
+  331 0000013E         ;     - Do not use any other register(s)
+  332 0000013E         ;
+  333 0000013E         ;     - Convert your hexadecimal results in R4 to decima
+                       l 
+  334 0000013E         ;       (use online converter https://www.rapidtables.co
+                       m/convert/number/hex-to-decimal.html) 
+  335 0000013E         ;       to check your results.
+  336 0000013E         ;
+  337 0000013E         ;     - Your commands should work for any number in R4.
+  338 0000013E         ;
+  339 0000013E F04F 0401       MOV              R4, #1
+  340 00000142         ; -- Place one commands here! --
+  341 00000142 EA4F 3484       LSL              R4, #14     ;16384
+  342 00000146         ;
+  343 00000146 F04F 0401       MOV              R4, #1
+  344 0000014A         ; -- Place one commands here! --
+  345 0000014A EB04 2404       ADD              R4, R4, LSL #8 ;257
+  346 0000014E         ;
+  347 0000014E F04F 0401       MOV              R4, #1
+  348 00000152         ; -- Place one commands here! -- 
+  349 00000152 EA4F 2504       MOV              R5, R4, LSL#8 ; it should be a 
+                                                            way to make a shift
+                                                             within SUB operato
+                                                            r
+  350 00000156 EBA5 0404       SUB              R4, R5, R4  ;255
+  351 0000015A         
+  352 0000015A         ;
+  353 0000015A F04F 0401       MOV              R4, #1
+  354 0000015E         ; -- Place two commands here! --
+  355 0000015E F04F 0512       MOV              R5, #18
+  356 00000162 FB04 F405       MUL              R4, R5      ;18
+  357 00000166         ;
+  358 00000166 F04F 0401       MOV              R4, #1
+  359 0000016A         ; -- Place two commands here! --
+  360 0000016A F04F 0587       MOV              R5, #135
+  361 0000016E FB04 F405       MUL              R4, R5      ;135
+  362 00000172         
+  363 00000172         stop
+  364 00000172 E7FE            B                stop
+  365 00000174         
+  366 00000174                 END
+
+
+
+ARM Macro Assembler    Page 8 
+
+
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\mdokukin_lab02.d -o.\objects\mdokukin_lab02.o -I.\RTE
+\_Target_1 -IC:\Keil_v5\ARM\PACK\Keil\LPC4000_DFP\2.1.0\Device\Include -IC:\Kei
+l_v5\ARM\CMSIS\Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSI
+ON SETA 525" --predefine="CORE_M4 SETA 1" --list=.\listings\mdokukin_lab02.lst 
+MDokukin_Lab02.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+SystemInit 00000000
+
+Symbol: SystemInit
+   Definitions
+      At line 20 in file MDokukin_Lab02.s
+   Uses
+      At line 15 in file MDokukin_Lab02.s
+Comment: SystemInit used once
+__main 00000002
+
+Symbol: __main
+   Definitions
+      At line 26 in file MDokukin_Lab02.s
+   Uses
+      At line 10 in file MDokukin_Lab02.s
+      At line 12 in file MDokukin_Lab02.s
+
+main 00000000
+
+Symbol: main
+   Definitions
+      At line 11 in file MDokukin_Lab02.s
+   Uses
+      None
+Comment: main unused
+stop 00000172
+
+Symbol: stop
+   Definitions
+      At line 363 in file MDokukin_Lab02.s
+   Uses
+      At line 364 in file MDokukin_Lab02.s
+Comment: stop used once
+4 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+__use_two_region_memory 00000000
+
+Symbol: __use_two_region_memory
+   Definitions
+      At line 14 in file MDokukin_Lab02.s
+   Uses
+      At line 13 in file MDokukin_Lab02.s
+Comment: __use_two_region_memory used once
+1 symbol
+339 symbols in table
