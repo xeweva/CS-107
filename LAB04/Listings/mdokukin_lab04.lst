@@ -1,0 +1,907 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;*******************************************************
+                       ************************
+    2 00000000         ;
+    3 00000000         ;    CS 107: Computer Architecture and Organization -- L
+                       AB 4
+    4 00000000         ;    Filename: Lab04.s
+    5 00000000         ;    Date: 2/18/2020
+    6 00000000         ;    Author: Max Dokukin
+    7 00000000         ;
+    8 00000000         ;*******************************************************
+                       ************************
+    9 00000000         ;
+   10 00000000                 GLOBAL           __main
+   11 00000000                 AREA             main, CODE, READONLY
+   12 00000000                 EXPORT           __main
+   13 00000000                 EXPORT           __use_two_region_memory
+   14 00000000 00000000 
+                       __use_two_region_memory
+                               EQU              0
+   15 00000000                 EXPORT           SystemInit
+   16 00000000                 ENTRY
+   17 00000000         
+   18 00000000         
+   19 00000000         ; System Init routine
+   20 00000000         SystemInit
+   21 00000000         ;
+   22 00000000 485E            LDR              R0, =data_bfr
+   23 00000002 495F            LDR              R1, =0x589d654c
+   24 00000004 4A5F            LDR              R2, =0xcf678e09
+   25 00000006 F44F 7380       MOV              R3, #256
+   26 0000000A         sysinit_loop
+   27 0000000A EA81 0402       EOR              R4, R1, R2
+   28 0000000E F840 4B04       STR              R4, [R0], #4
+   29 00000012 F004 040F       AND              R4, #0xF
+   30 00000016 41E1            RORS             R1, R1, R4
+   31 00000018 EA4F 0232       RRX              R2, R2
+   32 0000001C         
+   33 0000001C 3B01            SUBS             R3, #1
+   34 0000001E D1F4            BNE              sysinit_loop
+   35 00000020         ;
+   36 00000020 4770            BX               LR
+   37 00000022         ;
+   38 00000022         ; Main program
+   39 00000022         ;
+   40 00000022         __main
+   41 00000022         ;
+   42 00000022         ; 1. Clear data_bfr... Fill data_bfr by all zeros
+   43 00000022         ;
+   44 00000022         ; 256 of 0x00 bytes or 128 of 0x0000 halfwords or 64 of 
+                       0x00000000 words
+   45 00000022         ;
+   46 00000022         ; 'data_bfr' is placed beginning address 0x10000000
+   47 00000022         ; Use 'Memory' windows in debugger to make sure first 25
+                       6 bytes are 0's.
+   48 00000022         ;
+   49 00000022         ; +-----------------------------------------------------
+                       --------------+
+   50 00000022         ; !                                                     
+                                     !
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   51 00000022         ; !  Please, do not use 'hardcoded' address 0x10000000 i
+                       n your code!  !
+   52 00000022         ; !                                                     
+                                     !
+   53 00000022         ; !                   Use label 'data_bfr' instead!     
+                                     !
+   54 00000022         ; !                   -----------------------------     
+                                     !
+   55 00000022         ; !                                                     
+                                     !
+   56 00000022         ; !                For example: 'LDR   R0, =data_bfr'   
+                                     !
+   57 00000022         ; !                                                     
+                                     !
+   58 00000022         ; +-----------------------------------------------------
+                       --------------+
+   59 00000022         ;
+   60 00000022         ;-- Your instructions here ---
+   61 00000022         
+   62 00000022 F04F 0340       MOV              R3, #64
+   63 00000026 4855            LDR              R0, =data_bfr
+   64 00000028 F04F 0100       MOV              R1, #0
+   65 0000002C         
+   66 0000002C         cleaning_loop
+   67 0000002C F840 1B04       STR              R1, [R0], #4
+   68 00000030         
+   69 00000030 3B01            SUBS             R3, #1
+   70 00000032 D1FB            BNE              cleaning_loop
+   71 00000034         
+   72 00000034         
+   73 00000034         
+   74 00000034         ;
+   75 00000034         ; 2. Write the code that calculates the length of null-t
+                       erminated string.
+   76 00000034         ;
+   77 00000034         ; R0 - address of null-terminated string.
+   78 00000034         ; R1 - length of the string.
+   79 00000034         ;
+   80 00000034         ; Make sure your code works with empty string too!
+   81 00000034         ;
+   82 00000034         ; You may use any other register(s)
+   83 00000034         ;
+   84 00000034         ; Possible implementation:
+   85 00000034         ;
+   86 00000034         ;
+   87 00000034         ;  ln = 0
+   88 00000034         ;  while (*(r0++)) {
+   89 00000034         ;     ln++;}
+   90 00000034         ;
+   91 00000034         ; Test your code with both 'test_str_1' (length = 11) an
+                       d 'test_str_2' 
+   92 00000034         ; (length = 0) strings.
+   93 00000034         ; 
+   94 00000034         ; ---------------------
+   95 00000034         ; ADR  R0, test_str_1
+   96 00000034         ; ---------------------
+   97 00000034 A037            ADR              R0, test_str_2
+   98 00000036         ;-- Your instructions here ---
+   99 00000036         
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+  100 00000036 F04F 31FF       MOV              R1, #-1     ;CHAR COUNT
+  101 0000003A         strlen_loop
+  102 0000003A         
+  103 0000003A F101 0101       ADD              R1, #1      ;ADD  COUNT
+  104 0000003E         
+  105 0000003E F810 2B01       LDRB             R2, [R0], #1 ; GET CHAR DATA
+  106 00000042 2A00            CMP              R2, #0
+  107 00000044 D1F9            BNE              strlen_loop
+  108 00000046         
+  109 00000046         ;
+  110 00000046         ; 3. Write the code that copies null-terminated string i
+                       nto 'data_bfr'
+  111 00000046         ;
+  112 00000046         ; R0 - address of null-terminated string.
+  113 00000046         ;
+  114 00000046         ; Make shure you are copiing the null-byte in the end of
+                        the string too!
+  115 00000046         ;
+  116 00000046         ; Make sure your code works with empty string too!
+  117 00000046         ;
+  118 00000046         ; You may use any other register(s)
+  119 00000046         ;
+  120 00000046         ; Possible implementation:
+  121 00000046         ;
+  122 00000046         ; dst_ptr = @data_bfr
+  123 00000046         ; do {
+  124 00000046         ;      c = *r0++
+  125 00000046         ;    *dst_ptr++ = c
+  126 00000046         ; } while(c != 0)
+  127 00000046         ;
+  128 00000046         ; Test your code with both 'test_str_1' and 'test_str_2'
+                        strings.
+  129 00000046         ;
+  130 00000046         ; Use 'Memory' windows at address 0x10000000 in debugger
+                        to see if the strings
+  131 00000046         ; are copied properly
+  132 00000046         ;
+  133 00000046         ; ---------------------
+  134 00000046 A030            ADR              R0, test_str_1 ;STRING ADRESS
+  135 00000048         ; ---------------------
+  136 00000048         ; ADR  R0, test_str_2
+  137 00000048         ;-- Your instructions here ---
+  138 00000048         
+  139 00000048 494C            LDR              R1, =data_bfr 
+                                                            ;DESTINATION ADRESS
+                                                            
+  140 0000004A         
+  141 0000004A         strcopy_loop
+  142 0000004A         
+  143 0000004A F810 2B01       LDRB             R2, [R0], #1
+  144 0000004E F801 2B01       STRB             R2, [R1], #1
+  145 00000052         
+  146 00000052 2A00            CMP              R2, #0
+  147 00000054 D1F9            BNE              strcopy_loop
+  148 00000056         
+  149 00000056         
+  150 00000056         ;
+  151 00000056         ; 4. Calculate an average value of all elements in array
+                       . Elements are
+
+
+
+ARM Macro Assembler    Page 4 
+
+
+  152 00000056         ; unsigned 16-bit integer ([0...0xffff]).
+  153 00000056         ; 
+  154 00000056         ; R0 - address of first element in the array;
+  155 00000056         ; R1 - the number of elements in array (may be any numbe
+                       r,
+  156 00000056         ;      not a power of 2. May be 0 also)
+  157 00000056         ; R2 - calculated average
+  158 00000056         ;
+  159 00000056         ; If number of elements is 0, the average should be zero
+                       . 
+  160 00000056         ; *** Remember! You can not divide by 0! ***
+  161 00000056         ;
+  162 00000056         ; You may use any other register(s)
+  163 00000056         ;
+  164 00000056         ; Check your code for all 3 test cases.
+  165 00000056         ; 
+  166 00000056         ; ADR  R0, test_data_1
+  167 00000056         ; MOV  R1, #10    ; result = 59 (0x3B)
+  168 00000056         ; ---------------------
+  169 00000056         ; ADR  R0, test_data_1
+  170 00000056         ; MOV  R1, #0    ; result = 0
+  171 00000056         ; ---------------------
+  172 00000056 A035            ADR              R0, test_data_2
+  173 00000058 F04F 010C       MOV              R1, #12     ; result = 0xFFF0
+  174 0000005C         ;-- Your instructions here ---
+  175 0000005C         
+  176 0000005C F04F 0200       MOV              R2, #0
+  177 00000060 460C            MOV              R4, R1      ; COUNTER
+  178 00000062         
+  179 00000062 2900            CMP              R1, #0      ; ZERO EXCEPTION
+  180 00000064 D006            BEQ              zero_exception
+  181 00000066         
+  182 00000066         arrayAvg_loop
+  183 00000066         
+  184 00000066 F830 3B02       LDRH             R3, [R0], #2 ;READ DATA
+  185 0000006A 441A            ADD              R2, R3
+  186 0000006C         
+  187 0000006C 3C01            SUBS             R4, #1      ;EXIT COND
+  188 0000006E D1FA            BNE              arrayAvg_loop ; LOOP END
+  189 00000070         
+  190 00000070 FBB2 F2F1       UDIV             R2, R1
+  191 00000074         
+  192 00000074         zero_exception
+  193 00000074         
+  194 00000074         
+  195 00000074         
+  196 00000074         
+  197 00000074         ;
+  198 00000074         ; 5. Decrypt the secret message. The secret message is p
+                       laced beginning 'secret_message' label
+  199 00000074         ; The key is placed at 'secret_key' label. The length of
+                        the key is 16 bytes (you may use it in
+  200 00000074         ; your code). The decoding procedure is XOR between mess
+                       age character and key character. 
+  201 00000074         ; The message is longer than key, so, if the end of key 
+                       is reached, start using the key again from it's
+  202 00000074         ; first cheracter. Like this:
+  203 00000074         ; 
+  204 00000074         ; Msg:    m0  m1  m2  ... m14 m15 m16 m17 m18 ...
+
+
+
+ARM Macro Assembler    Page 5 
+
+
+  205 00000074         ;         xor xor xor ... xor xor xor xor xor ...
+  206 00000074         ; Key:    'H' 'u' 'm' ... '4' '5' 'H' 'u' 'm' ...
+  207 00000074         ;
+  208 00000074         ; Rslt:   s0  s1  s2  ... s14 s15 s16 s17 s18 ...
+  209 00000074         ;
+  210 00000074         ; You should continue while decrypted character is not n
+                       ull ('\0' or 0x00)
+  211 00000074         ;
+  212 00000074         ; You may use any other register(s)
+  213 00000074         ;
+  214 00000074         ; Possible implementation:
+  215 00000074         ;
+  216 00000074         ;  key_index = 0
+  217 00000074         ;  message_ptr = @secret_message;
+  218 00000074         ;  result_ptr = @data_bfr;
+  219 00000074         ;  do {
+  220 00000074         ;  c = *message_ptr++;
+  221 00000074         ;  c = c xor secret_key[key_index];
+  222 00000074         ;  *result_ptr = c;
+  223 00000074         ;  key_index = (key_index++) & 0xf
+  224 00000074         ;  } while (c != 0)
+  225 00000074         ;
+  226 00000074         ; Use 'Memory' windows at address 0x10000000 in debugger
+                        to read decrypted secret message.
+  227 00000074         ;
+  228 00000074         ;-- Your instructions here ---
+  229 00000074         
+  230 00000074         ;r0 message pointer
+  231 00000074         ;r1 key pointer
+  232 00000074         ;r2 output pointer
+  233 00000074         ;r3 message current char
+  234 00000074         ;r4 key current char
+  235 00000074         ;r5 decoded char
+  236 00000074         ;r6 key counter
+  237 00000074         
+  238 00000074 4844            LDR              R0, =secret_message
+  239 00000076 4945            LDR              R1, =secret_key
+  240 00000078 4A40            LDR              R2, =data_bfr
+  241 0000007A F04F 0600       MOV              R6, #0
+  242 0000007E         
+  243 0000007E         decode_loop
+  244 0000007E         
+  245 0000007E F810 3B01       LDRB             R3, [R0], #1 
+                                                            ; LOAD MESSAGE CHAR
+                                                            
+  246 00000082 F811 4B01       LDRB             R4, [R1], #1 ;LOAD KEY CHAR
+  247 00000086         
+  248 00000086 F106 0601       ADD              R6, #1      ;++ KEY COUNTER
+  249 0000008A 2E10            CMP              R6, #16     ; IF IT'S TIME TO R
+                                                            ESET KEY
+  250 0000008C BF04 3E10       SUBEQ            R6, #16     ; RESET KEY COUNTER
+                                                            
+  251 00000090 3910            SUBEQ            R1, #16     ; RESET KEY POINTER
+                                                            
+  252 00000092         
+  253 00000092 EA83 0504       EOR              R5, R3, R4  ;DECODE CHAR
+  254 00000096 F802 5B01       STRB             R5, [R2], #1 
+                                                            ;STORE DECODED CHAR
+                                                            
+
+
+
+ARM Macro Assembler    Page 6 
+
+
+  255 0000009A         
+  256 0000009A 2D00            CMP              R5, #0
+  257 0000009C D1EF            BNE              decode_loop ; ; ONE MORE ITERAT
+                                                            ION
+  258 0000009E         
+  259 0000009E         decode_loop_exit
+  260 0000009E         
+  261 0000009E         ;
+  262 0000009E         ; 6. (ADWANCED) Suppose you do not know the 'endianness'
+                        of your processor. 
+  263 0000009E         ; Write a program that writes '1' to R0 if the processor
+                        is little-endian 
+  264 0000009E         ; or '2' if the processor is big-endian.
+  265 0000009E         ;
+  266 0000009E         ; You may use any other register(s)
+  267 0000009E         ;
+  268 0000009E         ; LPC4088 is 'little-endian', so correct result is R1 = 
+                       1. Check yourself!
+  269 0000009E         ;
+  270 0000009E         ;-- Your instructions here ---
+  271 0000009E         ;--- About 7 instructions ----
+  272 0000009E F04F 0001       MOV              R0, #1
+  273 000000A2 4936            LDR              R1, =data_bfr
+  274 000000A4 F04F 0201       MOV              R2, #1
+  275 000000A8 600A            STR              R2, [R1]
+  276 000000AA 780A            LDRB             R2, [R1]
+  277 000000AC 2A00            CMP              R2, #0
+  278 000000AE BF08 2002       MOVEQ            R0, #2
+  279 000000B2         
+  280 000000B2         
+  281 000000B2         
+  282 000000B2         
+  283 000000B2         ;
+  284 000000B2         ; 7. (BONUS) Write the code to convert value of R0 (bina
+                       ry unsigned number in the 
+  285 000000B2         ; range of [0..9999]) to null-terminated string. Store t
+                       he resulting string
+  286 000000B2         ; into 'data_bfr'.
+  287 000000B2         ;
+  288 000000B2         ; Result string should be null-terminated, right-aligned
+                        with leading spaces.
+  289 000000B2         ;
+  290 000000B2         ; Examples:
+  291 000000B2         ;
+  292 000000B2         ;   R0 = 0    -> '   0'\0
+  293 000000B2         ;   R0 = 5    -> '   5'\0
+  294 000000B2         ;   R0 = 78   -> '  78'\0
+  295 000000B2         ;   R0 = 1542 -> '1542'\0
+  296 000000B2         ;
+  297 000000B2         ; You may use any other register(s)
+  298 000000B2         ;
+  299 000000B2         ; data_bfr is placed beginning address 0x10000000
+  300 000000B2         ; Use 'Memory' windows in debugger to read decripted sec
+                       ret message.
+  301 000000B2         ;
+  302 000000B2         ; Check your code for all 4 test cases.
+  303 000000B2         ;
+  304 000000B2         ; MOV  R0, #0
+  305 000000B2         ; ---------------------
+
+
+
+ARM Macro Assembler    Page 7 
+
+
+  306 000000B2         ; MOV  R0, #5
+  307 000000B2         ; ---------------------
+  308 000000B2         ; MOV  R0, #78
+  309 000000B2         ; ---------------------
+  310 000000B2 F240 50F4       MOV              R0, #1524
+  311 000000B6         
+  312 000000B6         ;-- Your instructions here ---
+  313 000000B6         ; int mpl = 1000
+  314 000000B6         ; 
+  315 000000B6         ; while(mpl != 1){
+  316 000000B6         ;  int digit = r0/mpl
+  317 000000B6         ;  if(digit != 0){
+  318 000000B6         ;   store digit;
+  319 000000B6         ;   r0 -= digit * mpl
+  320 000000B6         ;   ;}
+  321 000000B6         ;  else
+  322 000000B6         ;   store " "
+  323 000000B6         ;  mpl /= 10;
+  324 000000B6         
+  325 000000B6         
+  326 000000B6 F44F 717A       MOV              R1, #1000   ; CURRENT DIVISOR
+  327 000000BA F04F 020A       MOV              R2, #10     ;
+  328 000000BE 4B2F            LDR              R3, =data_bfr
+  329 000000C0         
+  330 000000C0 F04F 0627       MOV              R6, #0x27   ; WRITE ' CHARACTER
+                                                            
+  331 000000C4 F803 6B01       STRB             R6, [R3], #1 ; STORE ' BEGINNIN
+                                                            G CHARACTER 
+  332 000000C8 711E            STRB             R6, [R3, #4] ; STORE ' END CHAR
+                                                            ACTER
+  333 000000CA         
+  334 000000CA F04F 0620       MOV              R6, #0x20   ;SPACE ASCII
+  335 000000CE         
+  336 000000CE         int_to_str_loop
+  337 000000CE         
+  338 000000CE FBB0 F4F1       UDIV             R4, R0, R1  ;//DIVIDE NUMBER BY
+                                                             CURRENT DIVISOR
+  339 000000D2         
+  340 000000D2 2C00            CMP              R4, #0
+  341 000000D4 F104 0430       ADD              R4, #0X30   ; ASCII BIAS 
+  342 000000D8         
+  343 000000D8 BF17 F803 
+              4B01             STRBNE           R4, [R3], #1 ; STORE DIGIT
+  344 000000DE F803 6B01       STRBEQ           R6, [R3], #1 ; STORE SPACE
+  345 000000E2 FB04 F501       MULNE            R5, R4, R1
+  346 000000E6 1B40            SUBNE            R0, R5      ; SUBTRACT DIGIT FR
+                                                            OM NUMBER
+  347 000000E8         
+  348 000000E8 FBB1 F1F2       UDIV             R1, R2      ; DECREASE DIVISOR
+  349 000000EC         
+  350 000000EC 2900            CMP              R1, #0
+  351 000000EE D1EE            BNE              int_to_str_loop
+  352 000000F0         
+  353 000000F0         
+  354 000000F0 F813 2C01       LDRB             R2, [R3, #-1] ; CHECK IF THE LA
+                                                            ST DIGIT IS SPACE
+  355 000000F4 42B2            CMP              R2, R6
+  356 000000F6 BF08 F803 
+              4C01             STRBEQ           R4, [R3, #-1] ; REPLACE LAST SP
+
+
+
+ARM Macro Assembler    Page 8 
+
+
+                                                            ACE WITH ZERO IF IT
+                                                             WAS SPACE
+  357 000000FC         
+  358 000000FC F8C3 1001       STR              R1, [R3, #1] 
+                                                            ;ADD \0, R0 IS ZERO
+                                                            
+  359 00000100         ;
+  360 00000100         ; 8. (BONUS+) Based on code for previous task, change th
+                       e output format to:
+  361 00000100         ;
+  362 00000100         ;                    'd.ddd' 
+  363 00000100         ;
+  364 00000100         ; d - is a digit from 0 throw 9.
+  365 00000100         ;
+  366 00000100         ; Examples:
+  367 00000100         ;
+  368 00000100         ;   R0 = 0    -> '0.000'\0
+  369 00000100         ;   R0 = 5    -> '0.005'\0
+  370 00000100         ;   R0 = 78   -> '0.078'\0
+  371 00000100         ;   R0 = 1542 -> '1.542'\0
+  372 00000100         ;
+  373 00000100         ; You may use any other register(s)
+  374 00000100         ;
+  375 00000100         ; data_bfr is placed beginning address 0x10000000
+  376 00000100         ; Use 'Memory' windows in debugger to read decripted sec
+                       ret message.
+  377 00000100         ;
+  378 00000100         ; Check your code for all 4 test cases.
+  379 00000100         ;
+  380 00000100 F04F 0000       MOV              R0, #0
+  381 00000104         ; ---------------------
+  382 00000104         ; MOV  R0, #5
+  383 00000104         ; ---------------------
+  384 00000104         ; MOV  R0, #78
+  385 00000104         ; ---------------------
+  386 00000104         ; MOV  R0, #1524
+  387 00000104         
+  388 00000104         ;-- Your instructions here ---
+  389 00000104         
+  390 00000104         
+  391 00000104         
+  392 00000104         ;
+  393 00000104         stop
+  394 00000104 E7FE            B                stop
+  395 00000106 00 00           ALIGN
+  396 00000108         
+  397 00000108         test_str_1
+  398 00000108 53 42 43 
+              43 20 43 
+              53 20 31 
+              30 37 00         DCB              "SBCC CS 107", 0
+  399 00000114                 ALIGN
+  400 00000114         test_str_2
+  401 00000114 00              DCB              0
+  402 00000115 00 00 00        ALIGN
+  403 00000118         test_data_1
+  404 00000118 2D 00 1E 
+              00 7F 00 
+              40 00 52 
+
+
+
+ARM Macro Assembler    Page 9 
+
+
+              00 01 00 
+              38 00 0D 
+              00 54 00 
+              5F 00            DCW              45, 30, 127, 64, 82, 1, 56, 13,
+ 84, 95
+  405 0000012C                 ALIGN
+  406 0000012C         test_data_2
+  407 0000012C F0 FF F0 
+              FF F0 FF 
+              F0 FF F0 
+              FF F0 FF 
+              F0 FF F0 
+              FF F0 FF 
+              F0 FF F0 
+              FF F0 FF         DCW              0xFFF0, 0xFFF0, 0xFFF0, 0xFFF0,
+ 0xFFF0, 0xFFF0, 0xFFF0, 0xFFF0, 0xFFF0, 0xFFF0, 0xFFF0, 0xFFF0
+  408 00000144                 ALIGN
+  409 00000144         secret_key
+  410 00000144 48 75 6D 
+              61 6E 69 
+              74 69 65 
+              73 4C 61 
+              62 32 34 
+              35               DCB              "HumanitiesLab245" ; 16 symbols
+                                                            
+  411 00000154                 ALIGN
+  412 00000154         secret_message
+  413 00000154 0B 26 5C 
+              51 59 49 
+              1D 1A            DCB              0x0b, 0x26, 0x5c, 0x51, 0x59, 0
+x49, 0x1d, 0x1a
+  414 0000015C 45 07 24 
+              04 42 50 
+              51 46            DCB              0x45, 0x07, 0x24, 0x04, 0x42, 0
+x50, 0x51, 0x46
+  415 00000164 3C 55 0E 
+              0E 02 05 
+              11 0E            DCB              0x3c, 0x55, 0x0e, 0x0e, 0x02, 0
+x05, 0x11, 0x0E
+  416 0000016C 00 53 2F 
+              0D 03 41 
+              47 15            DCB              0x00, 0x53, 0x2f, 0x0d, 0x03, 0
+x41, 0x47, 0x15
+  417 00000174 2D 03 08 
+              13 4F 69         DCB              0x2d, 0x03, 0x08, 0x13, 0x4f, 0
+x69
+  418 0000017A 00 00           ALIGN
+  419 0000017C         
+  420 0000017C 00000000 
+              589D654C 
+              CF678E09 
+              00000000 
+              00000000 
+              00000000 
+              00000000 
+              00000000 
+              00000000 
+              00000000         AREA             variables, DATA, ALIGN=2
+  421 00000000         data_bfr
+
+
+
+ARM Macro Assembler    Page 10 
+
+
+  422 00000000 00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+
+
+
+ARM Macro Assembler    Page 11 
+
+
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00               SPACE            256
+  423 00000100         
+  424 00000100                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\mdokukin_lab04.d -o.\objects\mdokukin_lab04.o -I.\RTE
+\_Target_1 -IC:\Keil_v5\ARM\PACK\Keil\LPC4000_DFP\2.1.0\Device\Include -IC:\Kei
+l_v5\ARM\CMSIS\Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSI
+ON SETA 525" --predefine="CORE_M4 SETA 1" --list=.\listings\mdokukin_lab04.lst 
+MDokukin_Lab04.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+SystemInit 00000000
+
+Symbol: SystemInit
+   Definitions
+      At line 20 in file MDokukin_Lab04.s
+   Uses
+      At line 15 in file MDokukin_Lab04.s
+Comment: SystemInit used once
+__main 00000022
+
+Symbol: __main
+   Definitions
+      At line 40 in file MDokukin_Lab04.s
+   Uses
+      At line 10 in file MDokukin_Lab04.s
+      At line 12 in file MDokukin_Lab04.s
+
+arrayAvg_loop 00000066
+
+Symbol: arrayAvg_loop
+   Definitions
+      At line 182 in file MDokukin_Lab04.s
+   Uses
+      At line 188 in file MDokukin_Lab04.s
+Comment: arrayAvg_loop used once
+cleaning_loop 0000002C
+
+Symbol: cleaning_loop
+   Definitions
+      At line 66 in file MDokukin_Lab04.s
+   Uses
+      At line 70 in file MDokukin_Lab04.s
+Comment: cleaning_loop used once
+decode_loop 0000007E
+
+Symbol: decode_loop
+   Definitions
+      At line 243 in file MDokukin_Lab04.s
+   Uses
+      At line 257 in file MDokukin_Lab04.s
+Comment: decode_loop used once
+decode_loop_exit 0000009E
+
+Symbol: decode_loop_exit
+   Definitions
+      At line 259 in file MDokukin_Lab04.s
+   Uses
+      None
+Comment: decode_loop_exit unused
+int_to_str_loop 000000CE
+
+Symbol: int_to_str_loop
+   Definitions
+      At line 336 in file MDokukin_Lab04.s
+   Uses
+      At line 351 in file MDokukin_Lab04.s
+Comment: int_to_str_loop used once
+main 00000000
+
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+Symbol: main
+   Definitions
+      At line 11 in file MDokukin_Lab04.s
+   Uses
+      None
+Comment: main unused
+secret_key 00000144
+
+Symbol: secret_key
+   Definitions
+      At line 409 in file MDokukin_Lab04.s
+   Uses
+      At line 239 in file MDokukin_Lab04.s
+Comment: secret_key used once
+secret_message 00000154
+
+Symbol: secret_message
+   Definitions
+      At line 412 in file MDokukin_Lab04.s
+   Uses
+      At line 238 in file MDokukin_Lab04.s
+Comment: secret_message used once
+stop 00000104
+
+Symbol: stop
+   Definitions
+      At line 393 in file MDokukin_Lab04.s
+   Uses
+      At line 394 in file MDokukin_Lab04.s
+Comment: stop used once
+strcopy_loop 0000004A
+
+Symbol: strcopy_loop
+   Definitions
+      At line 141 in file MDokukin_Lab04.s
+   Uses
+      At line 147 in file MDokukin_Lab04.s
+Comment: strcopy_loop used once
+strlen_loop 0000003A
+
+Symbol: strlen_loop
+   Definitions
+      At line 101 in file MDokukin_Lab04.s
+   Uses
+      At line 107 in file MDokukin_Lab04.s
+Comment: strlen_loop used once
+sysinit_loop 0000000A
+
+Symbol: sysinit_loop
+   Definitions
+      At line 26 in file MDokukin_Lab04.s
+   Uses
+      At line 34 in file MDokukin_Lab04.s
+Comment: sysinit_loop used once
+test_data_1 00000118
+
+Symbol: test_data_1
+   Definitions
+      At line 403 in file MDokukin_Lab04.s
+
+
+
+ARM Macro Assembler    Page 3 Alphabetic symbol ordering
+Relocatable symbols
+
+   Uses
+      None
+Comment: test_data_1 unused
+test_data_2 0000012C
+
+Symbol: test_data_2
+   Definitions
+      At line 406 in file MDokukin_Lab04.s
+   Uses
+      At line 172 in file MDokukin_Lab04.s
+Comment: test_data_2 used once
+test_str_1 00000108
+
+Symbol: test_str_1
+   Definitions
+      At line 397 in file MDokukin_Lab04.s
+   Uses
+      At line 134 in file MDokukin_Lab04.s
+Comment: test_str_1 used once
+test_str_2 00000114
+
+Symbol: test_str_2
+   Definitions
+      At line 400 in file MDokukin_Lab04.s
+   Uses
+      At line 97 in file MDokukin_Lab04.s
+Comment: test_str_2 used once
+zero_exception 00000074
+
+Symbol: zero_exception
+   Definitions
+      At line 192 in file MDokukin_Lab04.s
+   Uses
+      At line 180 in file MDokukin_Lab04.s
+Comment: zero_exception used once
+19 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+data_bfr 00000000
+
+Symbol: data_bfr
+   Definitions
+      At line 421 in file MDokukin_Lab04.s
+   Uses
+      At line 22 in file MDokukin_Lab04.s
+      At line 63 in file MDokukin_Lab04.s
+      At line 139 in file MDokukin_Lab04.s
+      At line 240 in file MDokukin_Lab04.s
+      At line 273 in file MDokukin_Lab04.s
+      At line 328 in file MDokukin_Lab04.s
+
+variables 00000000
+
+Symbol: variables
+   Definitions
+      At line 420 in file MDokukin_Lab04.s
+   Uses
+      None
+Comment: variables unused
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+__use_two_region_memory 00000000
+
+Symbol: __use_two_region_memory
+   Definitions
+      At line 14 in file MDokukin_Lab04.s
+   Uses
+      At line 13 in file MDokukin_Lab04.s
+Comment: __use_two_region_memory used once
+1 symbol
+358 symbols in table
