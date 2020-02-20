@@ -309,7 +309,7 @@ decode_loop_exit
 ; ---------------------
 ;	MOV		R0, #1524
 
-;-- Your instructions here ---		
+;-- Your instructions here ---
 	MOV 	R1, #1000 ; CURRENT DIVISOR
 	MOV 	R2, #10 ; DIVISOR DECREACER
 	LDR		R3,	=data_bfr
@@ -350,7 +350,7 @@ int_to_str_loop
 	CMP		R1, #0 ; WHEN DIVISOR IS ZERO
 	BNE		int_to_str_loop
 	
-	STRB	R1, [R3, #1];ADD \0, R0 IS ZERO
+	STRB	R0, [R3, #1];ADD \0, R0 IS ZERO
 ;
 ; 8. (BONUS+) Based on code for previous task, change the output format to:
 ;
@@ -372,11 +372,11 @@ int_to_str_loop
 ;
 ; Check your code for all 4 test cases.
 ;
-	MOV		R0, #0
+;	MOV		R0, #0
 ; ---------------------
-;	MOV		R0, #5
+	MOV		R0, #5
 ; ---------------------
-;	MOV		R0, #78
+	MOV		R0, #78
 ; ---------------------
 ;	MOV		R0, #1524
 
@@ -394,15 +394,15 @@ int_to_str_loop
 
 	MOV		R6, #0x30;ZERO ASCII
 	
-int_to_str_setup_loop ; FILL SPACES AND SET INITIAL DIVISOR
+int_to_str_setup_loop_2 ; FILL SPACES AND SET INITIAL DIVISOR
 
 	CMP		R1, #1 ; ON THE LAST DIGIT
-	BEQ 	int_to_str_loop 
+	BEQ 	int_to_str_loop_2
 	
 	UDIV	R4, R0, R1 ;DIVIDE NUMBER BY CURRENT DIVISOR
 
 	CMP		R4, #0 ; IF DIGIT IS NOT 0
-	BNE		int_to_str_loop
+	BNE		int_to_str_loop_2
 
 	CMP 	R7, #1 ;IF POINTER IS ON THE DOT
 	ADDEQ 	R3, #1 ;SKIP DOT
@@ -410,10 +410,10 @@ int_to_str_setup_loop ; FILL SPACES AND SET INITIAL DIVISOR
 	ADD 	R7, #1 ; INCREASE POINTER COUNTER
 	UDIV	R1, R2 ; DECREASE DIVISOR
 
-	B		int_to_str_setup_loop
+	B		int_to_str_setup_loop_2
 
 	
-int_to_str_loop
+int_to_str_loop_2
 	
 	UDIV	R4, R0, R1 ;//DIVIDE NUMBER BY CURRENT DIVISOR
 
@@ -424,18 +424,17 @@ int_to_str_loop
 	ADD 	R7, #1 ; INCREASE POINTER COUNTER
 	SUB		R4, #0X30 ; REMOVE ASCII BIAS 
 
-	MULNE	R5, R4, R1 ; DIGIT * DIVISOR
-	SUBNE	R0, R5 ; SUBTRACT DIGIT FROM NUMBER
+	MUL		R5, R4, R1 ; DIGIT * DIVISOR
+	SUB		R0, R5 ; SUBTRACT DIGIT FROM NUMBER
 
 	UDIV	R1, R2 ; DECREASE DIVISOR
 	
 	CMP		R1, #0 ; WHEN DIVISOR IS ZERO
-	BNE		int_to_str_loop
+	BNE		int_to_str_loop_2
 	
-	STRB	R1, [R3, #1];ADD \0, R0 IS ZERO
-;
-;
-;
+	STRB	R0, [R3, #1];ADD \0, R0 IS ZERO
+
+
 ;
 stop
 	B		stop
