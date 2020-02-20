@@ -301,61 +301,56 @@ decode_loop_exit
 ;
 ; Check your code for all 4 test cases.
 ;
-;	MOV		R0, #0
+	MOV		R0, #0
 ; ---------------------
 ;	MOV		R0, #5
 ; ---------------------
-;	MOV		R0, #78
+;	MOV		R0, #780
 ; ---------------------
-	MOV		R0, #1524
+;	MOV		R0, #1524
 
-;-- Your instructions here ---
-;	int mpl = 1000
-;	
-;	while(mpl != 1){
-;		int digit = r0/mpl
-;		if(digit != 0){
-;			store digit;
-;			r0 -= digit * mpl
-;			;}
-;		else
-;			store " "
-;		mpl /= 10;
-		
-		
+;-- Your instructions here ---		
 	MOV 	R1, #1000 ; CURRENT DIVISOR
-	MOV 	R2, #10 ;
+	MOV 	R2, #10 ; DIVISOR DECREACER
 	LDR		R3,	=data_bfr
 	
-	MOV		R6, #0x27; WRITE ' CHARACTER
+	MOV		R6, #0x27; ' CHARACTER ASCII
 	STRB	R6, [R3], #1 ; STORE ' BEGINNING CHARACTER 
 	STRB	R6, [R3, #4] ; STORE ' END CHARACTER
-	
 	MOV		R6, #0x20;SPACE ASCII
+	
+int_to_str_setup_loop ; FILL SPACES AND SET INITIAL DIVISOR
+
+	CMP		R1, #1 ; ON THE LAST DIGIT
+	BEQ 	int_to_str_loop 
+	
+	UDIV	R4, R0, R1 ;//DIVIDE NUMBER BY CURRENT DIVISOR
+
+	CMP		R4, #0 ; IF DIGIT IS NOT 0
+	BNE		int_to_str_loop
+
+	STRB	R6, [R3], #1;STORE SPACE
+	UDIV	R1, R2 ; DECREASE DIVISOR
+	B		int_to_str_setup_loop
+
 	
 int_to_str_loop
 	
 	UDIV	R4, R0, R1 ;//DIVIDE NUMBER BY CURRENT DIVISOR
+		
+	ADD		R4, #0X30 ; add ASCII BIAS 
+	STRB	R4, [R3], #1 ; STORE DIGIT
+	SUB		R4, #0X30 ; remove ASCII BIAS 
 	
-	CMP		R4, #0
-	ADD		R4, #0X30 ; ASCII BIAS 
-	
-	STRBNE	R4, [R3], #1 ; STORE DIGIT
-	STRBEQ	R6, [R3], #1 ; STORE SPACE
-	MULNE	R5, R4, R1
+	MULNE	R5, R4, R1 
 	SUBNE	R0, R5 ; SUBTRACT DIGIT FROM NUMBER
 	
 	UDIV	R1, R2 ; DECREASE DIVISOR
 	
-	CMP		R1, #0
+	CMP		R1, #0 ; WHEN DIVISOR IS ZERO
 	BNE		int_to_str_loop
 	
-	
-	LDRB	R2, [R3, #-1]; CHECK IF THE LAST DIGIT IS SPACE
-	CMP		R2, R6
-	STRBEQ	R4, [R3, #-1]; REPLACE LAST SPACE WITH ZERO IF IT WAS SPACE
-	
-	STR		R1, [R3, #1];ADD \0, R0 IS ZERO
+	STRB	R1, [R3, #1];ADD \0, R0 IS ZERO
 ;
 ; 8. (BONUS+) Based on code for previous task, change the output format to:
 ;
@@ -386,8 +381,58 @@ int_to_str_loop
 ;	MOV		R0, #1524
 
 ;-- Your instructions here ---
+	MOV 	R1, #1000 ; CURRENT DIVISOR
+	MOV 	R2, #10 ; DIVISOR DECREACER
+	MOV 	R7, #0; COUNTER TO PLACE DOT
+	LDR		R3,	=data_bfr
+	
+	MOV		R6, #0x27; ' CHARACTER ASCII
+	STRB	R6, [R3], #1 ; STORE ' BEGINNING CHARACTER 
+	STRB	R6, [R3, #5] ; STORE ' END CHARACTER
+	MOV		R6, #0x2E; ' DOT ASCII
+	STRB	R6, [R3, #1] ; STORE DOT
 
+	MOV		R6, #0x30;ZERO ASCII
+	
+int_to_str_setup_loop ; FILL SPACES AND SET INITIAL DIVISOR
 
+	CMP		R1, #1 ; ON THE LAST DIGIT
+	BEQ 	int_to_str_loop 
+	
+	UDIV	R4, R0, R1 ;//DIVIDE NUMBER BY CURRENT DIVISOR
+
+	CMP		R4, #0 ; IF DIGIT IS NOT 0
+	BNE		int_to_str_loop
+
+	CMP 	R7, #1 ;IF POINTER IS ON THE DOT
+	ADDEQ 	R3, #1 ;SKIP DOT
+
+	STRB	R6, [R3], #1 ; STORE SPACE
+	ADD 	R7, #1 ; INCREASE COUNTER
+	UDIV	R1, R2 ; DECREASE DIVISOR
+	B		int_to_str_setup_loop
+
+	
+int_to_str_loop
+	
+	UDIV	R4, R0, R1 ;//DIVIDE NUMBER BY CURRENT DIVISOR
+
+	CMP 	R7, #1 ;IF POINTER IS ON THE DOT
+	ADDEQ 	R3, #1 ;SKIP DOT	ADD		R4, #0X30 ; add ASCII BIAS 
+
+	STRB	R4, [R3], #1 ; STORE DIGIT
+	ADD 	R7, #1 ; INCREASE COUNTER
+	SUB		R4, #0X30 ; remove ASCII BIAS 
+
+	MULNE	R5, R4, R1 
+	SUBNE	R0, R5 ; SUBTRACT DIGIT FROM NUMBER
+	
+	UDIV	R1, R2 ; DECREASE DIVISOR
+	
+	CMP		R1, #0 ; WHEN DIVISOR IS ZERO
+	BNE		int_to_str_loop
+	
+	STRB	R1, [R3, #1];ADD \0, R0 IS ZERO
 
 ;
 stop
