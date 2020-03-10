@@ -1,0 +1,11 @@
+.\objects\mdokukin_lab05_parta.o: MDokukin_Lab05_partA.s
+.\objects\mdokukin_lab05_parta.o: ..\LPC4088\BOARD.S
+.\objects\mdokukin_lab05_parta.o: ..\LPC4088\LPC4088.S
+.\objects\mdokukin_lab05_parta.o: ..\LPC4088\SYSCTLDEF.S
+.\objects\mdokukin_lab05_parta.o: ..\LPC4088\IOCONDEF.S
+.\objects\mdokukin_lab05_parta.o: ..\LPC4088\GPIODEF.S
+.\objects\mdokukin_lab05_parta.o: ..\LPC4088\SSPDEF.S
+.\objects\mdokukin_lab05_parta.o: ..\LPC4088\ADCDEF.S
+.\objects\mdokukin_lab05_parta.o: ..\LPC4088\NVICDEF.S
+.\objects\mdokukin_lab05_parta.o: ..\LPC4088\TIMERDEF.S
+.\objects\mdokukin_lab05_parta.o: ..\LPC4088\PWMDEF.S

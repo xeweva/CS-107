@@ -1,0 +1,13 @@
+Dependencies for Project 'lab05', Target 'Target 1': (DO NOT MODIFY !)
+F (.\MDokukin_Lab05_partA.s)(0x5E680475)(--cpu Cortex-M4.fp --pd "__EVAL SETA 1" -g --apcs=interwork -I ..\LPC4088-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\Keil\LPC4000_DFP\2.1.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include--pd "__UVISION_VERSION SETA 525" --pd "CORE_M4 SETA 1"--list .\listings\mdokukin_lab05_parta.lst --xref -o .\objects\mdokukin_lab05_parta.o --depend .\objects\mdokukin_lab05_parta.d)
+I (..\LPC4088\BOARD.S)(0x5CE6CBAE)
+I (..\LPC4088\LPC4088.S)(0x5CE5C3C0)
+I (..\LPC4088\SYSCTLDEF.S)(0x5D4674B6)
+I (..\LPC4088\IOCONDEF.S)(0x5CDB21AA)
+I (..\LPC4088\GPIODEF.S)(0x5CDAE5DC)
+I (..\LPC4088\SSPDEF.S)(0x5CDC8DB6)
+I (..\LPC4088\ADCDEF.S)(0x5CDB0D28)
+I (..\LPC4088\NVICDEF.S)(0x5CE59654)
+I (..\LPC4088\TIMERDEF.S)(0x5CE5961A)
+I (..\LPC4088\PWMDEF.S)(0x5CE5C3C0)
+F (.\startup_LPC407x_8x_177x_8x.s)(0x4FBA628E)(--cpu Cortex-M4.fp --pd "__EVAL SETA 1" -g --apcs=interwork -I ..\LPC4088-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\Keil\LPC4000_DFP\2.1.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include--pd "__UVISION_VERSION SETA 525" --pd "CORE_M4 SETA 1"--list .\listings\startup_lpc407x_8x_177x_8x.lst --xref -o .\objects\startup_lpc407x_8x_177x_8x.o --depend .\objects\startup_lpc407x_8x_177x_8x.d)
