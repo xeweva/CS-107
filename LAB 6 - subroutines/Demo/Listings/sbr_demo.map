@@ -1,0 +1,176 @@
+Component: ARM Compiler 5.06 update 6 (build 750) Tool: armlink [4d35ed]
+
+==============================================================================
+
+Section Cross References
+
+    startup_lpc407x_8x_177x_8x.o(RESET) refers to startup_lpc407x_8x_177x_8x.o(STACK) for __initial_sp
+    startup_lpc407x_8x_177x_8x.o(RESET) refers to startup_lpc407x_8x_177x_8x.o(.text) for Reset_Handler
+    startup_lpc407x_8x_177x_8x.o(.text) refers to demo6.o(main) for SystemInit
+    startup_lpc407x_8x_177x_8x.o(.text) refers to startup_lpc407x_8x_177x_8x.o(HEAP) for Heap_Mem
+    startup_lpc407x_8x_177x_8x.o(.text) refers to startup_lpc407x_8x_177x_8x.o(STACK) for Stack_Mem
+    demo6.o(main) refers to demo6.o(variables) for data_mem
+
+
+==============================================================================
+
+Image Symbol Table
+
+    Local Symbols
+
+    Symbol Name                              Value     Ov Type        Size  Object(Section)
+
+    RESET                                    0x00000000   Section      228  startup_lpc407x_8x_177x_8x.o(RESET)
+    demo6.s                                  0x00000000   Number         0  demo6.o ABSOLUTE
+    startup_LPC407x_8x_177x_8x.s             0x00000000   Number         0  startup_lpc407x_8x_177x_8x.o ABSOLUTE
+    .text                                    0x000000e4   Section       60  startup_lpc407x_8x_177x_8x.o(.text)
+    $v0                                      0x000000e4   Number         0  startup_lpc407x_8x_177x_8x.o(.text)
+    main                                     0x00000120   Section      116  demo6.o(main)
+    $v0                                      0x00000120   Number         0  demo6.o(main)
+    .ARM.__at_0x02FC                         0x000002fc   Section        4  startup_lpc407x_8x_177x_8x.o(.ARM.__at_0x02FC)
+    variables                                0x10000000   Section       12  demo6.o(variables)
+    A                                        0x10000000   Data           0  demo6.o(variables)
+    data_mem                                 0x10000000   Data           0  demo6.o(variables)
+    B                                        0x10000004   Data           0  demo6.o(variables)
+    MAXAB                                    0x10000008   Data           0  demo6.o(variables)
+    HEAP                                     0x10000010   Section        0  startup_lpc407x_8x_177x_8x.o(HEAP)
+    STACK                                    0x10000010   Section     1024  startup_lpc407x_8x_177x_8x.o(STACK)
+    Heap_Mem                                 0x10000010   Data           0  startup_lpc407x_8x_177x_8x.o(HEAP)
+    Stack_Mem                                0x10000010   Data        1024  startup_lpc407x_8x_177x_8x.o(STACK)
+    __initial_sp                             0x10000410   Data           0  startup_lpc407x_8x_177x_8x.o(STACK)
+
+    Global Symbols
+
+    Symbol Name                              Value     Ov Type        Size  Object(Section)
+
+    BuildAttributes$$THM_ISAv4$E$P$D$K$B$S$7EM$VFPi3$EXTD16$VFPS$VFMA$PE$A:L22UL41UL21$X:L11$S22US41US21$IEEE1$IW$USESV6$~STKCKD$USESV7$~SHL$OSPACE$EBA8$STANDARDLIB$EABIv2 0x00000000   Number         0  anon$$obj.o ABSOLUTE
+    __Vectors                                0x00000000   Data           4  startup_lpc407x_8x_177x_8x.o(RESET)
+    __use_two_region_memory                  0x00000000   Number         0  demo6.o ABSOLUTE
+    Reset_Handler                            0x000000e5   Thumb Code     8  startup_lpc407x_8x_177x_8x.o(.text)
+    NMI_Handler                              0x000000ed   Thumb Code     2  startup_lpc407x_8x_177x_8x.o(.text)
+    HardFault_Handler                        0x000000ef   Thumb Code     2  startup_lpc407x_8x_177x_8x.o(.text)
+    MemManage_Handler                        0x000000f1   Thumb Code     2  startup_lpc407x_8x_177x_8x.o(.text)
+    BusFault_Handler                         0x000000f3   Thumb Code     2  startup_lpc407x_8x_177x_8x.o(.text)
+    UsageFault_Handler                       0x000000f5   Thumb Code     2  startup_lpc407x_8x_177x_8x.o(.text)
+    SVC_Handler                              0x000000f7   Thumb Code     2  startup_lpc407x_8x_177x_8x.o(.text)
+    DebugMon_Handler                         0x000000f9   Thumb Code     2  startup_lpc407x_8x_177x_8x.o(.text)
+    PendSV_Handler                           0x000000fb   Thumb Code     2  startup_lpc407x_8x_177x_8x.o(.text)
+    SysTick_Handler                          0x000000fd   Thumb Code     2  startup_lpc407x_8x_177x_8x.o(.text)
+    ADC_IRQHandler                           0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    BOD_IRQHandler                           0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    CANActivity_IRQHandler                   0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    CAN_IRQHandler                           0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    DMA_IRQHandler                           0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    EEPROM_IRQHandler                        0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    EINT0_IRQHandler                         0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    EINT1_IRQHandler                         0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    EINT2_IRQHandler                         0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    EINT3_IRQHandler                         0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    ENET_IRQHandler                          0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    GPIO_IRQHandler                          0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    I2C0_IRQHandler                          0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    I2C1_IRQHandler                          0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    I2C2_IRQHandler                          0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    I2S_IRQHandler                           0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    LCD_IRQHandler                           0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    MCI_IRQHandler                           0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    MCPWM_IRQHandler                         0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    PLL0_IRQHandler                          0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    PLL1_IRQHandler                          0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    PWM0_IRQHandler                          0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    PWM1_IRQHandler                          0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    QEI_IRQHandler                           0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    RTC_IRQHandler                           0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    SSP0_IRQHandler                          0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    SSP1_IRQHandler                          0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    SSP2_IRQHandler                          0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    TIMER0_IRQHandler                        0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    TIMER1_IRQHandler                        0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    TIMER2_IRQHandler                        0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    TIMER3_IRQHandler                        0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    UART0_IRQHandler                         0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    UART1_IRQHandler                         0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    UART2_IRQHandler                         0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    UART3_IRQHandler                         0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    UART4_IRQHandler                         0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    USBActivity_IRQHandler                   0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    USB_IRQHandler                           0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    WDT_IRQHandler                           0x000000ff   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    __user_initial_stackheap                 0x00000101   Thumb Code     0  startup_lpc407x_8x_177x_8x.o(.text)
+    SystemInit                               0x00000121   Thumb Code     0  demo6.o(main)
+    __main                                   0x0000015b   Thumb Code     0  demo6.o(main)
+
+
+
+==============================================================================
+
+Memory Map of the image
+
+  Image Entry point : 0x00000121
+
+  Load Region LR_IROM1 (Base: 0x00000000, Size: 0x0000030c, Max: 0x00080000, ABSOLUTE)
+
+    Execution Region ER_IROM1 (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x00000300, Max: 0x00080000, ABSOLUTE)
+
+    Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
+
+    0x00000000   0x00000000   0x000000e4   Data   RO            3    RESET               startup_lpc407x_8x_177x_8x.o
+    0x000000e4   0x000000e4   0x0000003c   Code   RO            5    .text               startup_lpc407x_8x_177x_8x.o
+    0x00000120   0x00000120   0x00000074   Code   RO           13  * main                demo6.o
+    0x00000194   0x00000194   0x00000168   PAD
+    0x000002fc   0x000002fc   0x00000004   Code   RO            4    .ARM.__at_0x02FC    startup_lpc407x_8x_177x_8x.o
+
+
+    Execution Region RW_IRAM1 (Exec base: 0x10000000, Load base: 0x00000300, Size: 0x00000410, Max: 0x00010000, ABSOLUTE)
+
+    Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
+
+    0x10000000   0x00000300   0x0000000c   Data   RW           14    variables           demo6.o
+    0x1000000c   0x0000030c   0x00000004   PAD
+    0x10000010        -       0x00000000   Zero   RW            2    HEAP                startup_lpc407x_8x_177x_8x.o
+    0x10000010        -       0x00000400   Zero   RW            1    STACK               startup_lpc407x_8x_177x_8x.o
+
+
+    Execution Region RW_IRAM2 (Exec base: 0x20000000, Load base: 0x0000030c, Size: 0x00000000, Max: 0x00008000, ABSOLUTE)
+
+    **** No section assigned to this execution region ****
+
+
+==============================================================================
+
+Image component sizes
+
+
+      Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
+
+       116         30          0         12          0        236   demo6.o
+        64         26        228          0       1024       1024   startup_lpc407x_8x_177x_8x.o
+
+    ----------------------------------------------------------------------
+       540        416        228         12       1028       1260   Object Totals
+         0          0          0          0          0          0   (incl. Generated)
+       360        360          0          0          4          0   (incl. Padding)
+
+    ----------------------------------------------------------------------
+         0          0          0          0          0          0   Library Totals
+         0          0          0          0          0          0   (incl. Padding)
+
+    ----------------------------------------------------------------------
+
+==============================================================================
+
+
+      Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
+
+       540        416        228         12       1028       1260   Grand Totals
+       540        416        228         12       1028       1260   ELF Image Totals
+       540        416        228         12          0          0   ROM Totals
+
+==============================================================================
+
+    Total RO  Size (Code + RO Data)                  768 (   0.75kB)
+    Total RW  Size (RW Data + ZI Data)              1040 (   1.02kB)
+    Total ROM Size (Code + RO Data + RW Data)        780 (   0.76kB)
+
+==============================================================================
+

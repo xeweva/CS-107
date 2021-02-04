@@ -1,0 +1,7 @@
+--cpu=Cortex-M4.fp
+".\objects\startup_lpc407x_8x_177x_8x.o"
+".\objects\demo6.o"
+--strict --scatter ".\Objects\sbr_demo.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\sbr_demo.map" -o .\Objects\sbr_demo.axf

@@ -1,0 +1,9 @@
+Dependencies for Project 'sbr_demo', Target 'Target 1': (DO NOT MODIFY !)
+F (.\startup_LPC407x_8x_177x_8x.s)(0x4FBA628E)(--cpu Cortex-M4.fp --pd "__EVAL SETA 1" -g --apcs=interwork -I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\Keil\LPC4000_DFP\2.1.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include--pd "__UVISION_VERSION SETA 525" --pd "CORE_M4 SETA 1"--list .\listings\startup_lpc407x_8x_177x_8x.lst --xref -o .\objects\startup_lpc407x_8x_177x_8x.o --depend .\objects\startup_lpc407x_8x_177x_8x.d)
+F (.\demo1.s)(0x5DA9D314)()
+F (.\demo2.s)(0x5DA9D52E)()
+F (.\demo3.s)(0x5DA9DBFC)()
+F (.\demo4.s)(0x5DA9DDB6)()
+F (.\demo5.s)(0x5DB067A8)()
+F (.\demo7.s)(0x5E6BDEF0)(--cpu Cortex-M4.fp --pd "__EVAL SETA 1" -g --apcs=interwork -I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\Keil\LPC4000_DFP\2.1.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include--pd "__UVISION_VERSION SETA 525" --pd "CORE_M4 SETA 1"--list .\listings\demo7.lst --xref -o .\objects\demo7.o --depend .\objects\demo7.d)
+F (.\demo6.s)(0x5E6BE09A)(--cpu Cortex-M4.fp --pd "__EVAL SETA 1" -g --apcs=interwork -I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\Keil\LPC4000_DFP\2.1.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include--pd "__UVISION_VERSION SETA 525" --pd "CORE_M4 SETA 1"--list .\listings\demo6.lst --xref -o .\objects\demo6.o --depend .\objects\demo6.d)
